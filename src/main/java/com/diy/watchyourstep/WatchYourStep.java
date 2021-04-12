@@ -16,6 +16,7 @@ public class WatchYourStep extends JFrame {
     private static final int NUMBEROFHOLES = 10;
     private TerrainButton[][] terrain = new TerrainButton[GRIDSIZE][GRIDSIZE];
     private int totalRevealed = 0;
+    private int marked = 0;
 
     public static void main(String[] args) {
         try {
@@ -63,6 +64,8 @@ public class WatchYourStep extends JFrame {
         centerPanel.setLayout(new GridLayout(GRIDSIZE, GRIDSIZE));
         add(centerPanel, BorderLayout.CENTER);
 
+        setFooterPanel();
+
         for (int row = 0; row < GRIDSIZE; row++) {
             for (int col = 0; col < GRIDSIZE; col++) {
                 TerrainButton tb = new TerrainButton(row, col);
@@ -74,27 +77,17 @@ public class WatchYourStep extends JFrame {
                         } else if (e.getButton() == MouseEvent.BUTTON3) {
                             flag(tb.getRow(), tb.getCol());
                         }
+                        setFooterPanel();
                     }
 
                     @Override
-                    public void mousePressed(MouseEvent e) {
-
-                    }
-
+                    public void mousePressed(MouseEvent e) { }
                     @Override
-                    public void mouseReleased(MouseEvent e) {
-
-                    }
-
+                    public void mouseReleased(MouseEvent e) { }
                     @Override
-                    public void mouseEntered(MouseEvent e) {
-
-                    }
-
+                    public void mouseEntered(MouseEvent e) { }
                     @Override
-                    public void mouseExited(MouseEvent e) {
-
-                    }
+                    public void mouseExited(MouseEvent e) { }
                 });
                 terrain[row][col] = tb;
                 centerPanel.add(terrain[row][col]);
@@ -187,10 +180,32 @@ public class WatchYourStep extends JFrame {
     }
 
     private void flag(int row, int col) {
-        if (!terrain[row][col].isRevealed()) {
-            terrain[row][col].setFont(new Font("Dialog", Font.BOLD, 16));
-            terrain[row][col].setText("\u2620");
-
+        terrain[row][col].switchStatus();
+        if (terrain[row][col].getStatus() == 1) {
+            marked++;
+        } else if (terrain[row][col].getStatus() == 2) {
+            marked--;
         }
+    }
+
+    private String getPercentageRevealed() {
+        double total = (double) totalRevealed / (GRIDSIZE * GRIDSIZE);
+        total = ((double) ((int) (total * 100)) / 100) * 100;
+        return "" + total + "%";
+    }
+
+    private void setFooterPanel() {
+        JPanel footerPanel = new JPanel();
+        footerPanel.setLayout(new GridLayout(1,3));
+        JLabel revealed = new JLabel();
+        revealed.setText("Revealed: " + getPercentageRevealed());
+        footerPanel.add(revealed);
+        JLabel holes = new JLabel();
+        holes.setText("Holes: " + NUMBEROFHOLES);
+        footerPanel.add(holes);
+        JLabel marked = new JLabel();
+        marked.setText("Marked: " + this.marked);
+        footerPanel.add(marked);
+        add(footerPanel, BorderLayout.PAGE_END);
     }
 }
