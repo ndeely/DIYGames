@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class SlidingTiles extends JFrame {
     private static final long serialVersionUID = 1L;
-    private static final String FILENAME = "src\\main\\java\\com\\diy\\slidingTiles\\slidingTilesImage.jpg";
+    private static final String FILENAME = "src\\main\\java\\com\\diy\\slidingTiles\\SlidingTilesFile.jpg";
     private int tileSize = 50;
     private int gridSize = 4;
     private BufferedImage image = null;
@@ -138,7 +138,7 @@ public class SlidingTiles extends JFrame {
         int openRow = gridSize - 1;
         int openCol = gridSize - 1;
         Random rand = new Random();
-        for (int i = 0; i < /*25 * gridSize*/2; i++) {
+        for (int i = 0; i < 25 * gridSize; i++) {
             int direction = rand.nextInt(4);
             TileButton openButton = tile[openRow][openCol];
             switch(direction) {
