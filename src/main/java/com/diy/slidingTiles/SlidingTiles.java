@@ -53,6 +53,8 @@ public class SlidingTiles extends JFrame {
     }
 
     private void initGUI() {
+        setTitle("Sliding Tiles");
+
         TitleLabel tl = new TitleLabel();
         tl.setText("Sliding Tiles");
         add(tl, BorderLayout.PAGE_START);

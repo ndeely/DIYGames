@@ -46,6 +46,8 @@ public class WatchYourStep extends JFrame {
     public WatchYourStep() {
         initGUI();
 
+        setTitle("Watch Your Step");
+
         setHoles();
 
         setResizable(false);
