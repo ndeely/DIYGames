@@ -85,6 +85,17 @@ public class MazeGenerator extends JFrame {
                 moveBall(e.getKeyCode());
             }
         });
+
+        //show instructions
+        JOptionPane.showMessageDialog(
+                this,
+                "Move the green ball through the maze to reach the red ball.\n" +
+                        "Movement\n" +
+                        "Up: 'W' or Up Arrow Key\n" +
+                        "Down: 'S' or Down Arrow Key\n" +
+                        "Left: 'A' or Left Arrow Key\n" +
+                        "Right: 'D' or Right Arrow Key\n"
+        );
     }
 
     private void newMaze() {
