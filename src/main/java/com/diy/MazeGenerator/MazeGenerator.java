@@ -4,6 +4,8 @@ import com.diy.mycomponents.TitleLabel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -62,6 +64,19 @@ public class MazeGenerator extends JFrame {
         centerPanel.add(mazePanel);
 
         //button panel
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setBackground(Color.BLACK);
+        add(buttonPanel, BorderLayout.PAGE_END);
+        JButton newMazeButton = new JButton();
+        newMazeButton.setText("New Maze");
+        newMazeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                newMaze();
+            }
+        });
+        newMazeButton.setFocusable(false);
+        buttonPanel.add(newMazeButton);
 
         //listeners
         addKeyListener(new KeyAdapter() {
@@ -73,6 +88,7 @@ public class MazeGenerator extends JFrame {
     }
 
     private void newMaze() {
+        mazePanel.removeAll();
         mazePanel.setLayout(new GridLayout(this.rows, this.cols));
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < cols; col++) {
@@ -88,6 +104,8 @@ public class MazeGenerator extends JFrame {
         this.endCol = this.cols - 1;
         this.cells[this.row][this.col].setCurrent(true);
         this.cells[this.endRow][this.endCol].setEnd(true);
+
+        mazePanel.revalidate();
     }
 
     private void generateMaze() {
