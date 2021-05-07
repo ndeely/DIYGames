@@ -8,7 +8,7 @@ public class TitleLabel extends JLabel {
         Font font = new Font("Serif", Font.BOLD, 32);
         setFont(font);
         setBackground(Color.WHITE);
-        setForeground(Color.BLUE);
+        setForeground(Color.BLACK);
         setOpaque(true);
         setHorizontalAlignment(JLabel.CENTER);
         setText("title");

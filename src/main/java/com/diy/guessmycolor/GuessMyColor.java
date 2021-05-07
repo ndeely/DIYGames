@@ -8,6 +8,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Dimension;
 
@@ -16,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
+
+import static javax.swing.JOptionPane.showConfirmDialog;
 import static javax.swing.JOptionPane.showMessageDialog;
 
 public class GuessMyColor extends JFrame {
@@ -28,6 +31,10 @@ public class GuessMyColor extends JFrame {
     private int targetRed;
     private int targetGreen;
     private int targetBlue;
+
+    private int sampleRed = 0;
+    private int sampleGreen = 0;
+    private int sampleBlue = 0;
 
     public static final void main(String[] args) {
         try {
@@ -74,7 +81,6 @@ public class GuessMyColor extends JFrame {
         samplePanel.setPreferredSize(size);
         centerPanel.add(samplePanel);
 
-        //targetPanel.setBackground(Color.cyan);
         targetPanel.setPreferredSize(size);
         centerPanel.add(targetPanel);
 
@@ -83,11 +89,11 @@ public class GuessMyColor extends JFrame {
         add(buttonPanel, BorderLayout.PAGE_END);
 
         //create + and - colour buttons
-        Font font = new Font("Dialog", Font.BOLD, 18);
+        ArrayList<JButton> colorButtons = new ArrayList<JButton>();
+
         //red buttons
         JButton moreRedButton = new JButton("+");
         moreRedButton.setBackground(Color.RED);
-        moreRedButton.setFont(font);
         moreRedButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -95,10 +101,9 @@ public class GuessMyColor extends JFrame {
                 }
             }
         );
-        buttonPanel.add(moreRedButton);
+        colorButtons.add(moreRedButton);
         JButton lessRedButton = new JButton("-");
         lessRedButton.setBackground(Color.RED);
-        lessRedButton.setFont(font);
         lessRedButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -106,11 +111,11 @@ public class GuessMyColor extends JFrame {
                 }
             }
         );
-        buttonPanel.add(lessRedButton);
+        colorButtons.add(lessRedButton);
+
         //green buttons
         JButton moreGreenButton = new JButton("+");
         moreGreenButton.setBackground(Color.GREEN);
-        moreGreenButton.setFont(font);
         moreGreenButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -118,10 +123,9 @@ public class GuessMyColor extends JFrame {
                 }
             }
         );
-        buttonPanel.add(moreGreenButton);
+        colorButtons.add(moreGreenButton);
         JButton lessGreenButton = new JButton("-");
         lessGreenButton.setBackground(Color.GREEN);
-        lessGreenButton.setFont(font);
         lessGreenButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -129,11 +133,11 @@ public class GuessMyColor extends JFrame {
                 }
             }
         );
-        buttonPanel.add(lessGreenButton);
+        colorButtons.add(lessGreenButton);
+
         //blue buttons
         JButton moreBlueButton = new JButton("+");
         moreBlueButton.setBackground(Color.BLUE);
-        moreBlueButton.setFont(font);
         moreBlueButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -141,10 +145,9 @@ public class GuessMyColor extends JFrame {
                 }
             }
         );
-        buttonPanel.add(moreBlueButton);
+        colorButtons.add(moreBlueButton);
         JButton lessBlueButton = new JButton("-");
         lessBlueButton.setBackground(Color.BLUE);
-        lessBlueButton.setFont(font);
         lessBlueButton.addActionListener(
             new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -152,7 +155,14 @@ public class GuessMyColor extends JFrame {
                 }
             }
         );
-        buttonPanel.add(lessBlueButton);
+        colorButtons.add(lessBlueButton);
+
+        Font font = new Font("Dialog", Font.BOLD, 18);
+        for (JButton jb: colorButtons) {
+            jb.setFont(font);
+            jb.setFocusable(false);
+            buttonPanel.add(jb);
+        }
     }
 
     private void generateTargetColor() {
@@ -167,49 +177,81 @@ public class GuessMyColor extends JFrame {
 
     //color is "R", "G", or "B". mod is "+" or "-"
     private void modifyColor(String color, String mod) {
-        if (mod.equals("+")) {
-            if (color.equals("R")) {
-                if (this.targetRed + 16 < 255) {
-                    this.targetRed += 16;
-                } else {
-                    showMessageDialog(this, "Maximum red already!");
+        switch (mod) {
+            case "+":
+                switch (color) {
+                    case "R":
+                        if (this.sampleRed + 16 < 256) {
+                            this.sampleRed += 16;
+                        } else {
+                            showMessageDialog(this, "Maximum red already!");
+                        }
+                        break;
+                    case "G":
+                        if (this.sampleGreen + 16 < 256) {
+                            this.sampleGreen += 16;
+                        } else {
+                            showMessageDialog(this, "Maximum green already!");
+                        }
+                        break;
+                    case "B":
+                        if (this.sampleBlue + 16 < 256) {
+                            this.sampleBlue += 16;
+                        } else {
+                            showMessageDialog(this, "Maximum blue already!");
+                        }
+                        break;
                 }
-            } else if (color.equals("G")) {
-                if (this.targetGreen + 16 < 255) {
-                    this.targetGreen += 16;
-                } else {
-                    showMessageDialog(this, "Maximum green already!");
+                break;
+            case "-":
+                switch (color) {
+                    case "R":
+                        if (this.sampleRed - 16 >= 0) {
+                            this.sampleRed -= 16;
+                        } else {
+                            showMessageDialog(this, "Minimum red already!");
+                        }
+                        break;
+                    case "G":
+                        if (this.sampleGreen - 16 >= 0) {
+                            this.sampleGreen -= 16;
+                        } else {
+                            showMessageDialog(this, "Minimum green already!");
+                        }
+                        break;
+                    case "B":
+                        if (this.sampleBlue - 16 >= 0) {
+                            this.sampleBlue -= 16;
+                        } else {
+                            showMessageDialog(this, "Minimum blue already!");
+                        }
+                        break;
                 }
+                break;
+        }
+        Color sampleColor = new Color(sampleRed, sampleGreen, sampleBlue);
+        samplePanel.setBackground(sampleColor);
+        checkIfWin();
+    }
+
+    private void checkIfWin() {
+        if (
+            Math.abs(targetRed - sampleRed) < 16 &&
+            Math.abs(targetGreen - sampleGreen) < 16 &&
+            Math.abs(targetBlue - sampleBlue) < 16
+        ) {
+            int option = showConfirmDialog(this, "You win! Play again?");
+            if (option == 0) {
+                newGame();
             } else {
-                if (this.targetBlue + 16 < 255) {
-                    this.targetBlue += 16;
-                } else {
-                    showMessageDialog(this, "Maximum blue already!");
-                }
-            }
-        } else {
-            if (color.equals("R")) {
-                if (this.targetRed - 16 > 0) {
-                    this.targetRed -= 16;
-                } else {
-                    showMessageDialog(this, "Minimum red already!");
-                }
-            } else if (color.equals("G")) {
-                if (this.targetGreen - 16 > 0) {
-                    this.targetGreen -= 16;
-                } else {
-                    showMessageDialog(this, "Minimum green already!");
-                }
-            } else {
-                if (this.targetBlue - 16 > 0) {
-                    this.targetBlue -= 16;
-                } else {
-                    showMessageDialog(this, "Minimum blue already!");
-                }
+                System.exit(0);
             }
         }
-        Color targetColor = new Color(targetRed, targetGreen, targetBlue);
-        targetPanel.setBackground(targetColor);
+    }
+
+    private void newGame() {
+        samplePanel.setBackground(Color.BLACK);
+        generateTargetColor();
     }
     
 }

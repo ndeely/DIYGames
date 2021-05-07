@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class TerrainButton extends JButton {
     private static final long serialVersionUID = 1L;
-    private static final int SIZE = 50;
+    private static final int SIZE = 55;
     private int row = 0;
     private int col = 0;
     private int nextToHoles = 0;

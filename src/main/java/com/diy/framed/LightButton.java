@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 public class LightButton extends JButton {
     private static final long serialVersionUID = 1L;
 
-    Dimension SIZE = new Dimension(50, 50);
+    Dimension SIZE = new Dimension(75, 75);
 
     private int row = 0;
     private int col = 0;
