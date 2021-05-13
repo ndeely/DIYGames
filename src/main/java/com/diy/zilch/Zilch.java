@@ -186,11 +186,15 @@ public class Zilch extends JFrame {
         }
         calcNewPoints(count);
         if (this.newPoints == 0) { valid = false; }
+        int countOnes = 0;
         for (int i = 0; i < count.length; i++) {
             if ((i != 0 && i != 4) && count[i] > 0 && count[i] < 3) {
                 valid = false;
             }
+            if (count[i] == 1) { countOnes++; }
         }
+        if (countOnes == 6) { valid = true; }
+
         return valid;
     }
 
