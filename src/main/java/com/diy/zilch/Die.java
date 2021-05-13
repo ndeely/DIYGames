@@ -8,8 +8,7 @@ import java.util.Random;
 
 public class Die extends JPanel {
     private static final long SerialVersionUID = 1L;
-    private static final int WIDTH = 60;
-    private static final int HEIGHT = 60;
+    private static final int SIZE = 60;
     private static final int STATE_AVAILABLE = 0;
     private static final int STATE_SELECTED = 1;
     private static final int STATE_HELD = 2;
@@ -41,7 +40,7 @@ public class Die extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(WIDTH, HEIGHT);
+        return new Dimension(SIZE, SIZE);
     }
 
     public void paintComponent(Graphics g) {
@@ -51,38 +50,38 @@ public class Die extends JPanel {
                 g.setColor(Color.WHITE);
                 break;
             case STATE_SELECTED:
-                g.setColor(Color.RED);
+                g.setColor(Color.GREEN);
                 break;
             case STATE_HELD:
                 g.setColor(Color.LIGHT_GRAY);
                 break;
         }
-        g.fillRect(0,0, WIDTH, HEIGHT);
+        g.fillRect(0,0, SIZE, SIZE);
 
         //draw border
         g.setColor(Color.BLACK);
-        g.drawRect(0,0,WIDTH - 1, HEIGHT - 1);
+        g.drawRect(0,0,SIZE - 1, SIZE - 1);
 
         //draw dots
         switch (this.value) {
             case 5:
-                drawDot(g, WIDTH / 4, HEIGHT / 4);
-                drawDot(g, 3 * WIDTH / 4, 3 * HEIGHT / 4);
+                drawDot(g, SIZE / 4, SIZE / 4);
+                drawDot(g, 3 * SIZE / 4, 3 * SIZE / 4);
             case 3:
-                drawDot(g, WIDTH / 4, 3 * HEIGHT / 4);
-                drawDot(g, 3 * WIDTH / 4, HEIGHT / 4);
+                drawDot(g, SIZE / 4, 3 * SIZE / 4);
+                drawDot(g, 3 * SIZE / 4, SIZE / 4);
             case 1:
-                drawDot(g, WIDTH / 2, HEIGHT / 2);
+                drawDot(g, SIZE / 2, SIZE / 2);
                 break;
             case 6:
-                drawDot(g, WIDTH / 2, HEIGHT / 4);
-                drawDot(g, WIDTH / 2, 3 * HEIGHT / 4);
+                drawDot(g, SIZE / 2, SIZE / 4);
+                drawDot(g, SIZE / 2, 3 * SIZE / 4);
             case 4:
-                drawDot(g, WIDTH / 4, HEIGHT / 4);
-                drawDot(g, 3 * WIDTH / 4, 3 * HEIGHT / 4);
+                drawDot(g, SIZE / 4, SIZE / 4);
+                drawDot(g, 3 * SIZE / 4, 3 * SIZE / 4);
             case 2:
-                drawDot(g, WIDTH / 4, 3 * HEIGHT / 4);
-                drawDot(g, 3 * WIDTH / 4, HEIGHT / 4);
+                drawDot(g, SIZE / 4, 3 * SIZE / 4);
+                drawDot(g, 3 * SIZE / 4, SIZE / 4);
                 break;
         }
     }
@@ -92,10 +91,9 @@ public class Die extends JPanel {
         g.fillOval(x - 5, y - 5, 10, 10);
     }
 
-    public int roll() {
+    public void roll() {
         this.value = rand.nextInt(6) + 1;
         repaint();
-        return this.value;
     }
 
     public void click() {
@@ -121,6 +119,11 @@ public class Die extends JPanel {
 
     public void hold() {
         this.state = STATE_HELD;
+        repaint();
+    }
+
+    public void select() {
+        this.state = STATE_SELECTED;
         repaint();
     }
 

@@ -121,7 +121,7 @@ public class Zilch extends JFrame {
 
         //dice panel
         JPanel dicePanel = new JPanel();
-        dicePanel.setBackground(Color.GREEN);
+        dicePanel.setBackground(Color.BLUE);
         diceRowPanel.add(dicePanel);
 
         for(int i = 0; i < 6; i++) {
@@ -181,12 +181,16 @@ public class Zilch extends JFrame {
 
         for (Die die: this.dice) {
             if (die.isSelected()) {
-                int value = die.getValue();
-                count[value - 1]++;
+                count[die.getValue() - 1]++;
             }
         }
         calcNewPoints(count);
         if (this.newPoints == 0) { valid = false; }
+        for (int i = 0; i < count.length; i++) {
+            if ((i != 0 && i != 4) && count[i] > 0 && count[i] < 3) {
+                valid = false;
+            }
+        }
         return valid;
     }
 
@@ -489,6 +493,20 @@ public class Zilch extends JFrame {
     }
 
     private void potentialMoveClicked() {
-
+        for (Die d: dice) {
+            if (d.isSelected()) {
+                d.makeAvailable();
+            }
+        }
+        for (PotentialMove pm: this.potentialMoves) {
+            if (pm.isSelected()) {
+                for (int index: pm.getDiceIndexes()) {
+                    if (dice[index].isAvailable()) {
+                        dice[index].select();
+                    }
+                }
+            }
+        }
+        clickedDie();
     }
 }
