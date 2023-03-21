@@ -36,7 +36,7 @@ public class Zilch extends JFrame {
     private JButton endRoundButton = new JButton("End Round");
 
     private Die[] dice = new Die[6];
-    private ArrayList<PotentialMove> potentialMoves = new ArrayList();
+    private ArrayList<PotentialMove> potentialMoves = new ArrayList<PotentialMove>();
     private JPanel potentialMovesPanel = new JPanel();
 
     public static void main(String[] args) {
@@ -71,13 +71,12 @@ public class Zilch extends JFrame {
 
         //main panel
         JPanel mainPanel = new JPanel();
-        mainPanel.setBackground(Color.GREEN);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         add(mainPanel, BorderLayout.CENTER);
 
         //score panel
         JPanel scorePanel = new JPanel();
-        scorePanel.setBackground(Color.GREEN);
+        scorePanel.setBackground(Color.CYAN);
         scorePanel.setLayout(new FlowLayout()); // arrange items in a row
 
         JLabel roundTitleLabel = new JLabel("Round: ");
@@ -98,12 +97,12 @@ public class Zilch extends JFrame {
 
         //dice row panel
         JPanel diceRowPanel = new JPanel();
-        diceRowPanel.setBackground(Color.GREEN);
+        diceRowPanel.setBackground(Color.LIGHT_GRAY);
         mainPanel.add(diceRowPanel);
 
         //points panel
         JPanel pointsPanel = new JPanel();
-        pointsPanel.setBackground(Color.GREEN);
+        pointsPanel.setBackground(Color.LIGHT_GRAY);
         pointsPanel.setLayout(new BoxLayout(pointsPanel, BoxLayout.Y_AXIS));
         diceRowPanel.add(pointsPanel);
 
@@ -121,7 +120,7 @@ public class Zilch extends JFrame {
 
         //dice panel
         JPanel dicePanel = new JPanel();
-        dicePanel.setBackground(Color.BLUE);
+        dicePanel.setBackground(Color.LIGHT_GRAY);
         diceRowPanel.add(dicePanel);
 
         for(int i = 0; i < 6; i++) {
@@ -205,13 +204,26 @@ public class Zilch extends JFrame {
                 case 1:
                     countOnes++;
                 case 2:
-                    if (i == 0) { this.newPoints += 10 * counts[i]; } // 1 or 2 ones
-                    if (i == 4) { this.newPoints += 5 * counts[i]; } // 1 or 2 fives
-                    break;
+                    switch(i) {
+                        case 0:
+                            this.newPoints += 10 * counts[i]; // 1 or 2 ones
+                            break;
+                        case 4:
+                            this.newPoints += 5 * counts[i]; // 1 or 2 fives
+                            break;
+                    }
                 case 3:
-                    if (i == 0) { this.newPoints += 100; } // 3 ones
-                    else { this.newPoints += 10 * i; } // 3 of other value
-                    break;
+                    switch(i) {
+                        case 0:
+                            this.newPoints += 100; // 3 ones
+                            break;
+                        case 4:
+                            this.newPoints += 50; // 3 fives
+                            break;
+                        default:
+                            this.newPoints += 10 * i; // 3 of other value
+                            break;
+                    }
                 case 4:
                     this.newPoints += 200;
                     break;

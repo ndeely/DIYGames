@@ -6,48 +6,48 @@ import java.awt.*;
 public class BasicDie extends JPanel {
     private static final long SerialVersionUID = 1L;
 
-    private int value;
-    private int size;
+    private final int VALUE;
+    private final int SIZE;
 
     public BasicDie(int value, int size) {
-        this.value = value;
-        this.size = size;
+        this.VALUE = value;
+        this.SIZE = size;
     }
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(size, size);
+        return new Dimension(SIZE, SIZE);
     }
 
     public void paintComponent(Graphics g) {
         //fill background
         g.setColor(Color.WHITE);
-        g.fillRect(0,0, size, size);
+        g.fillRect(0,0, SIZE, SIZE);
 
         //draw border
         g.setColor(Color.BLACK);
-        g.drawRect(0,0,size - 1, size - 1);
+        g.drawRect(0,0,SIZE - 1, SIZE - 1);
 
         //draw dots
-        switch (this.value) {
+        switch (this.VALUE) {
             case 5:
-                drawDot(g, size / 4, size / 4);
-                drawDot(g, 3 * size / 4, 3 * size / 4);
+                drawDot(g, SIZE / 4, SIZE / 4);
+                drawDot(g, 3 * SIZE / 4, 3 * SIZE / 4);
             case 3:
-                drawDot(g, size / 4, 3 * size / 4);
-                drawDot(g, 3 * size / 4, size / 4);
+                drawDot(g, SIZE / 4, 3 * SIZE / 4);
+                drawDot(g, 3 * SIZE / 4, SIZE / 4);
             case 1:
-                drawDot(g, size / 2, size / 2);
+                drawDot(g, SIZE / 2, SIZE / 2);
                 break;
             case 6:
-                drawDot(g, size / 2, size / 4);
-                drawDot(g, size / 2, 3 * size / 4);
+                drawDot(g, SIZE / 2, SIZE / 4);
+                drawDot(g, SIZE / 2, 3 * SIZE / 4);
             case 4:
-                drawDot(g, size / 4, size / 4);
-                drawDot(g, 3 * size / 4, 3 * size / 4);
+                drawDot(g, SIZE / 4, SIZE / 4);
+                drawDot(g, 3 * SIZE / 4, 3 * SIZE / 4);
             case 2:
-                drawDot(g, size / 4, 3 * size / 4);
-                drawDot(g, 3 * size / 4, size / 4);
+                drawDot(g, SIZE / 4, 3 * SIZE / 4);
+                drawDot(g, 3 * SIZE / 4, SIZE / 4);
                 break;
         }
     }
