@@ -34,7 +34,7 @@ public class WatchYourStep extends JFrame {
     }
 
     private void newGame() {
-        totalRevealed = 0;
+        this.totalRevealed = 0;
         for (int r = 0; r < GRIDSIZE; r++) {
             for (int c = 0; c < GRIDSIZE; c++) {
                 terrain[r][c].reset();
@@ -129,7 +129,10 @@ public class WatchYourStep extends JFrame {
             terrain[row][col].reveal(true);
             terrain[row][col].setFont(new Font("Dialog", Font.BOLD, 12));
             totalRevealed += 1;
-            if (terrain[row][col].hasHole()) {
+            if (terrain[row][col].hasHole() && this.totalRevealed == 0) {
+                this.newGame();
+                this.bigReveal(row, col);
+            } else if (terrain[row][col].hasHole()) {
                 endGame(0);
             } else if (totalRevealed == (GRIDSIZE * GRIDSIZE) - NUMBEROFHOLES) {
                 endGame(1);
